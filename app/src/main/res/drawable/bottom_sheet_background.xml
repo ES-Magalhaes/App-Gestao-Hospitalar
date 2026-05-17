@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Cor de fundo da sua dialog (Branco neste exemplo) -->
+    <solid android:color="#FFFFFF" />
+
+    <!-- Arredondando apenas os cantos superiores -->
+    <corners
+        android:topLeftRadius="16dp"
+        android:topRightRadius="16dp" />
+</shape>
