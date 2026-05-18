@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.AppGestaoHospitalar" parent="Base.Theme.AppGestaoHospitalar" />
+
+    <style name="ShapeAppearance.App.RoundedCornersImage" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">16dp</item>
+    </style>
 </resources>

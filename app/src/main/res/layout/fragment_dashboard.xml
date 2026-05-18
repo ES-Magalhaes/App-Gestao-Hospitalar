@@ -103,33 +103,49 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="16dp"
             app:cardBackgroundColor="#0D47A1">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="20dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Informativo Geral"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:text="A ala norte passará por manutenção preventiva hoje às 22h."
-                    android:textColor="#E0E0E0"
-                    android:layout_marginBottom="16dp"/>
+                    android:textColor="#E0E0E0" />
+
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Saber mais"
                     android:backgroundTint="#B3FFFFFF"
-                    android:textColor="#0D47A1"/>
+                    android:text="Saber mais"
+                    android:textColor="#0D47A1" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <!-- Banner de Doutores -->
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_dashboard_hospital"
+            android:layout_width="match_parent"
+            android:layout_height="186dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="24dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/doutoresimage"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.App.RoundedCornersImage" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
