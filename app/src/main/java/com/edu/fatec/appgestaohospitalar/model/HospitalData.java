@@ -2,14 +2,15 @@ package com.edu.fatec.appgestaohospitalar.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class HospitalData {
 
     private static List<Medico> listaMedicos = new ArrayList<>();
     private static List<Paciente> listaPacientes = new ArrayList<>();
-    private static int contadorIdPaciente = 5000; // Para simular a geração de IDs de pacientes
+    private static int contadorIdPaciente = 5000;
 
-    // Bloco estático para já iniciar o app com alguns dados (os mesmos das fotos)
     static {
         listaMedicos.add(new Medico("Roberto Silva", "11122233344", "123456", "Cardiologia"));
         listaMedicos.add(new Medico("Ana Costa", "55566677788", "789012", "Pediatria"));
@@ -33,10 +34,23 @@ public class HospitalData {
         return listaPacientes;
     }
 
+    // Métodos para API Remota
+    public static void carregarMedicosRemotos(Callback<List<Medico>> callback) {
+        ApiService api = RetrofitClient.getApiService();
+        Call<List<Medico>> call = api.getMedicos();
+        call.enqueue(callback);
+    }
+
+    public static void salvarMedicoRemoto(Medico medico, Callback<Medico> callback) {
+        ApiService api = RetrofitClient.getApiService();
+        Call<Medico> call = api.addMedico(medico);
+        call.enqueue(callback);
+    }
+
     public static void addPaciente(Paciente paciente) {
         contadorIdPaciente++;
-        paciente.setPacienteId("#" + contadorIdPaciente); // Gera um ID falso automático
-        paciente.setUltimaVisita("Hoje"); // Define a visita como hoje
+        paciente.setPacienteId("#" + contadorIdPaciente);
+        paciente.setUltimaVisita("Hoje");
         listaPacientes.add(paciente);
     }
 }
