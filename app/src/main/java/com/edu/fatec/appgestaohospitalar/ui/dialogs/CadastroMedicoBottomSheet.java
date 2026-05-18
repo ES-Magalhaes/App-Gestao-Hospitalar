@@ -13,6 +13,10 @@ import com.edu.fatec.appgestaohospitalar.R;
 import com.edu.fatec.appgestaohospitalar.model.HospitalData;
 import com.edu.fatec.appgestaohospitalar.model.Medico;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CadastroMedicoBottomSheet extends BottomSheetDialogFragment {
 
     // Criamos uma interface (Callback) para avisar a tela de Médicos que um novo foi salvo
@@ -55,14 +59,31 @@ public class CadastroMedicoBottomSheet extends BottomSheetDialogFragment {
                 return;
             }
 
-            // Cria o objeto e salva no nosso banco temporário
+            // Cria o objeto
             Medico novoMedico = new Medico(nome, cpf, crm, especialidade);
-            HospitalData.addMedico(novoMedico);
 
-            // Avisa a tela principal para atualizar a lista
-            if (listener != null) listener.onMedicoSalvo();
+            // Envia para a API Remota (Spring Boot)
+            HospitalData.salvarMedicoRemoto(novoMedico, new Callback<Medico>() {
+                @Override
+                public void onResponse(Call<Medico> call, Response<Medico> response) {
+                    if (response.isSuccessful()) {
+                        // Adiciona localmente também para atualizar a lista sem precisar baixar tudo de novo
+                        HospitalData.addMedico(response.body() != null ? response.body() : novoMedico);
 
-            dismiss(); // Fecha o modal
+                        // Avisa a tela principal para atualizar a lista
+                        if (listener != null) listener.onMedicoSalvo();
+                        dismiss(); // Fecha o modal
+                        Toast.makeText(getContext(), "Médico cadastrado com sucesso!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Erro ao salvar no servidor: " + response.code(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Medico> call, Throwable t) {
+                    Toast.makeText(getContext(), "Falha na conexão: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
         return view;
